@@ -13,7 +13,7 @@
     }
   },
   "addons": [
-    "mlab",
+    "mongolab",
     "papertrail"
   ]
 }
