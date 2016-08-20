@@ -76,3 +76,6 @@ seriousm:emoji-continued
 templates:tabs
 verron:autosize
 simple:json-routes
+
+# Security
+browser-policy
