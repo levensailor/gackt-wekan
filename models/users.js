@@ -3,15 +3,7 @@ Users = Meteor.users;
 Users.attachSchema(new SimpleSchema({
   username: {
     type: String,
-    optional: true,
-    autoValue() { // eslint-disable-line consistent-return
-      if (this.isInsert && !this.isSet) {
-        const name = this.field('profile.fullname');
-        if (name.isSet) {
-          return name.value.toLowerCase().replace(/\s/g, '');
-        }
-      }
-    },
+    optional: true
   },
   emails: {
     type: [Object],
@@ -36,24 +28,19 @@ Users.attachSchema(new SimpleSchema({
   },
   profile: {
     type: Object,
-    optional: true,
-    autoValue() { // eslint-disable-line consistent-return
-      if (this.isInsert && !this.isSet) {
-        return {};
-      }
-    },
+    optional: true
   },
   'profile.avatarUrl': {
     type: String,
-    optional: true,
+    optional: true
   },
   'profile.emailBuffer': {
     type: [String],
-    optional: true,
+    optional: true
   },
   'profile.fullname': {
     type: String,
-    optional: true,
+    optional: true
   },
   'profile.initials': {
     type: String,

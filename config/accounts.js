@@ -1,20 +1,14 @@
-const passwordField = AccountsTemplates.removeField('password');
-const emailField = AccountsTemplates.removeField('email');
-AccountsTemplates.addFields([{
-  _id: 'username',
-  type: 'text',
-  displayName: 'username',
-  required: true,
-  minLength: 2,
-}, emailField, passwordField]);
+// Only allow festivaljapon logins
+Accounts.config({ restrictCreationByEmailDomain: 'festivaljapon.com'});
 
 AccountsTemplates.configure({
   defaultLayout: 'userFormsLayout',
   defaultContentRegion: 'content',
   confirmPassword: false,
-  enablePasswordChange: true,
-  sendVerificationEmail: true,
-  showForgotPasswordLink: true,
+  enablePasswordChange: false,
+  sendVerificationEmail: false,
+  showForgotPasswordLink: false,
+  forbidClientAccountCreation: true,
   onLogoutHook() {
     const homePage = 'home';
     if (FlowRouter.getRouteName() === homePage) {
@@ -22,44 +16,17 @@ AccountsTemplates.configure({
     } else {
       FlowRouter.go(homePage);
     }
-  },
+  }
 });
 
-['signIn', 'signUp', 'resetPwd', 'forgotPwd', 'enrollAccount'].forEach(
+['signIn'].forEach(
   (routeName) => AccountsTemplates.configureRoute(routeName));
 
-// We display the form to change the password in a popup window that already
-// have a title, so we unset the title automatically displayed by useraccounts.
 AccountsTemplates.configure({
   texts: {
-    title: {
-      changePwd: '',
-    },
-  },
-});
-
-AccountsTemplates.configureRoute('changePwd', {
-  redirect() {
-    // XXX We should emit a notification once we have a notification system.
-    // Currently the user has no indication that his modification has been
-    // applied.
-    Popup.back();
-  },
-});
-
-if (Meteor.isServer) {
-  if (process.env.MAIL_FROM) {
-    Accounts.emailTemplates.from = process.env.MAIL_FROM;
+    errors: {
+      mustBeLoggedIn: "Please login with your Matsuri account.",
+      loginForbidden: "Only Matsuri accounts are allowed."
+    }
   }
-
-  ['resetPassword-subject', 'resetPassword-text', 'verifyEmail-subject', 'verifyEmail-text', 'enrollAccount-subject', 'enrollAccount-text'].forEach((str) => {
-    const [templateName, field] = str.split('-');
-    Accounts.emailTemplates[templateName][field] = (user, url) => {
-      return TAPi18n.__(`email-${str}`, {
-        url,
-        user: user.getName(),
-        siteName: Accounts.emailTemplates.siteName,
-      }, user.getLanguage());
-    };
-  });
-}
+});

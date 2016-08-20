@@ -28,7 +28,8 @@ mongo
 mquandalle:collection-mutations
 
 # Account system
-accounts-password
+#accounts-ui
+accounts-google
 kenton:accounts-sandstorm
 service-configuration
 useraccounts:core
