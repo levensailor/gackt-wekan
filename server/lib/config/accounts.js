@@ -12,7 +12,6 @@ Meteor.startup(function() {
 
   Accounts.onCreateUser((options, user) => {
     if (!user.services.google || !user.services.google.email.match(/(@festivaljapon\.com)$/) ) {
-      //throw new Error('Login with Matsuri accounts only.');
       throw new Meteor.Error(403, AccountsTemplates.texts.errors.loginForbidden);
     }
     const { picture, email, name } = user.services.google;
@@ -23,10 +22,7 @@ Meteor.startup(function() {
     user.username = email;
     user.profile.initials = name.match(/[A-Z]/g).join("");
 
-  //const { first_name, last_name } = user.services.facebook;
-  //user.initials = first_name[0].toUpperCase() + last_name[0].toUpperCase();
-
-  // Don't forget to return the new user object at the end!
+    // Don't forget to return the new user object at the end!
     return user;
   });
 });
