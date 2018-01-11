@@ -1,5 +1,5 @@
 // Only allow festivaljapon logins
-Accounts.config({ restrictCreationByEmailDomain: 'festivaljapon.com'});
+Accounts.config({});
 
 AccountsTemplates.configure({
   defaultLayout: 'userFormsLayout',
