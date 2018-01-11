@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wekan/wekan.git"
+    "url": "git+https://github.com/levensailor/gackt-wekan.git"
   },
   "license": "MIT",
   "bugs": {
